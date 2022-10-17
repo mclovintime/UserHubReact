@@ -12,8 +12,10 @@ export async function getUsers() {
 }
 
 export async function getPostsByUser(userId) {
+ // console.log(userId, "is user id in api function")
   try {
     const { data } = await axios.get(`${ BASE }/users/${ userId }/posts`);
+    console.log(data)
     return data;
   } catch (error) {
     throw error;

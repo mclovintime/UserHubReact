@@ -1,11 +1,13 @@
 import React, {useEffect} from 'react';
+import { getPostsByUser} from '../api';
 
 import './UserPosts.css';
 
 
 const UserPosts = ({
   currentUser,
-  userPosts
+  userPosts,
+  setUserPosts
 }) => {
 
   useEffect(() => {
@@ -13,7 +15,7 @@ const UserPosts = ({
       setUserPosts([]);
       return;
     }
-  
+    
     getPostsByUser(currentUser.id)
       .then(posts => {
         setUserPosts(posts);
@@ -22,6 +24,7 @@ const UserPosts = ({
         // something something errors
       });
   }, [currentUser]);
+  console.log(userPosts)
   return (
     <div className="user-posts">
       <h2>Posts By { currentUser.username }</h2>

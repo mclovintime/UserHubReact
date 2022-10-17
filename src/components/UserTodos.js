@@ -1,11 +1,25 @@
 import React from 'react';
+import { getTodosByUser } from '../api';
 
 import './UserTodos.css';
 
 const UserTodos = ({
   currentUser,
-  userTodos
+  userTodos,
+  setUserTodos,
+
 }) => {
+
+  
+
+    getTodosByUser(currentUser.id)
+      .then(todos => {
+        setUserTodos(todos);
+      })
+      .catch(error => {
+        // something something errors
+      });
+    
   return (
     <div className="user-todos">
       <h2>Todos By { currentUser.username }</h2>

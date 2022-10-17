@@ -10,6 +10,11 @@ import {
 } from "react-router-dom";
 
 import { Header, UserPosts, UserTodos } from "./components";
+
+import {
+  getCurrentUser
+} from './auth';
+
 const App = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [userPosts, setUserPosts] = useState([]);

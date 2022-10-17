@@ -4,6 +4,13 @@ import { getUsers, getPostsByUser } from './api'
 
 
 import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
+
+import {
   Header,
   UserPosts,
   UserTodos
@@ -25,32 +32,84 @@ import {
 
       
       
-  }, []);  return (
-    <div id="App">
-      <Header
-        userList={ userList }
-        currentUser={ currentUser }
-        setCurrentUser={ setCurrentUser } />
-      {
-        currentUser
-        ? <>
-        <UserPosts
-            setUserPosts = {setUserPosts}
-            userPosts={ userPosts }
-            currentUser={ currentUser } />
-            <UserTodos
-            userTodos = {userTodos}
-            currentUser = {currentUser}
-            setUserTodos = {setUserTodos} />
+  }, []);  
+  return (
+    <Router>
+      <div id="App">
+        <Header
+          userList={ userList }
+          currentUser={ currentUser }
+          setCurrentUser={ setCurrentUser } />
+        {
+          currentUser
+          ? <>
+              <Switch>
+                <Route path="/posts">
+                  <UserPosts
+                    userPosts={ userPosts }
+                    currentUser={ currentUser } />
+                </Route>
+                <Route path="/todos">
+                  <UserTodos
+                    userTodos={ userTodos }
+                    currentUser={ currentUser } />
+                </Route>
+                <Route exact path="/">
+                  <h2 style={{
+                    padding: ".5em"
+                  }}>Welcome, { currentUser.username }!</h2>
+                </Route>
+                <Redirect to="/" />
+              </Switch>
             </>
-        : null
-      }
-
-    </div>
-
+          : <>
+              <Switch>
+                <Route exact path="/">
+                  <h2 style={{
+                    padding: ".5em"
+                  }}>Please log in, above.</h2>
+                </Route>
+                <Redirect to="/" />
+              </Switch>
+            </>
+        }
+      </div>
+    </Router>
   );
 }
-const element = document.getElementById('root')
-const root = ReactDOM.createRoot(element)
-root.render(
-  <App />);
+
+
+//   return (
+//     <Router>
+
+//     <div id="App">
+//       <Header
+//         userList={ userList }
+//         currentUser={ currentUser }
+//         setCurrentUser={ setCurrentUser } />
+//       {
+//         currentUser
+//         ? <>
+//         <Switch>
+//         <UserPosts
+//             setUserPosts = {setUserPosts}
+//             userPosts={ userPosts }
+//             currentUser={ currentUser } />
+//             <UserTodos
+//             userTodos = {userTodos}
+//             currentUser = {currentUser}
+//             setUserTodos = {setUserTodos} />
+//       </Switch>
+//             </>
+//         : null
+//       }
+
+//     </div>
+//             </Router>
+
+//   );
+// }
+// const element = document.getElementById('root')
+// const root = ReactDOM.createRoot(element)
+// root.render(
+//   <App />);

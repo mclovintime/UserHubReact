@@ -2,10 +2,26 @@ import React, {useEffect} from 'react';
 
 import './UserPosts.css';
 
+
 const UserPosts = ({
   currentUser,
   userPosts
 }) => {
+
+  useEffect(() => {
+    if (!currentUser) {
+      setUserPosts([]);
+      return;
+    }
+  
+    getPostsByUser(currentUser.id)
+      .then(posts => {
+        setUserPosts(posts);
+      })
+      .catch(error => {
+        // something something errors
+      });
+  }, [currentUser]);
   return (
     <div className="user-posts">
       <h2>Posts By { currentUser.username }</h2>
@@ -19,20 +35,7 @@ const UserPosts = ({
   );
 }
 
-useEffect(() => {
-  if (!currentUser) {
-    setUserPosts([]);
-    return;
-  }
 
-  getPostsByUser(currentUser.id)
-    .then(posts => {
-      setUserPosts(posts);
-    })
-    .catch(error => {
-      // something something errors
-    });
-}, [currentUser]);
 
 
 

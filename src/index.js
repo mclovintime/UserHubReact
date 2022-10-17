@@ -1,20 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import { getUsers } from './api';
-
-
-
-
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import { getUsers } from "./api"
 import {
-  Header
-} from './components';
-
-const App = () => {
-  const [userList, setUserList] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null); 
-
- // this is new
-  useEffect(() => {
+  Header, UserPosts
+} from "./components";const App = () => {
+  const [userList, setUserList] = useState([]);  useEffect(() => {
     getUsers()
       .then(users => {
         setUserList(users)
@@ -22,16 +12,13 @@ const App = () => {
       .catch(error => {
         // something something errors
       });
-  }, []);
-
-  return (
-    <div id="App">
+  }, []);  return (
+    <div id='App'>
       <Header userList={ userList } />
     </div>
   );
 }
-
-ReactDOM.render(
-  <App />,
-  document.getElementById('root')
-);
+const element = document.getElementById("root")
+const root = ReactDOM.createRoot(element)
+root.render(
+  <App />);
